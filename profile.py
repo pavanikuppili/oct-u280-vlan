@@ -76,7 +76,12 @@ params = pc.bindParameters()
   
 pc.verifyParameters()
 
-lan = request.LAN()
+lan1 = request.Link("link1", "vlan")
+lan2 = request.Link("link2", "vlan")
+
+lan1.setVlanTag(2711)
+lan2.setVlanTag(2712)
+
 
 nodeList = params.nodes.split(',')
 i = 0
@@ -112,19 +117,32 @@ for nodeName in nodeList:
     # Secret sauce.
     fpga.SubNodeOf(host)
 
-    host_iface1 = host.addInterface()
-    host_iface1.component_id = "eth2"
-    host_iface1.addAddress(pg.IPv4Address("192.168.40." + str(i+30), "255.255.255.0")) 
+    if i==0:
+        host_iface1 = host.addInterface()
+        host_iface1.component_id = "eth2"
+        host_iface1.addAddress(pg.IPv4Address("192.168.40." + str(i+30), "255.255.255.0")) 
+        lan1.addInterface(host_iface1)
+    if i==1:
+        host_iface1 = host.addInterface()
+        host_iface1.component_id = "eth2"
+        host_iface1.addAddress(pg.IPv4Address("192.168.50." + str(i+30), "255.255.255.0"))
+        lan2.addInterface(host_iface1)
+
     fpga_iface1 = fpga.addInterface()
     fpga_iface1.component_id = "eth0"
-    fpga_iface1.addAddress(pg.IPv4Address("192.168.40." + str(i+10), "255.255.255.0"))
+    fpga_iface1.addAddress(pg.IPv4Address("192.168.50." + str(i+10), "255.255.255.0"))
     fpga_iface2 = fpga.addInterface()
     fpga_iface2.component_id = "eth1"
-    fpga_iface2.addAddress(pg.IPv4Address("192.168.40." + str(i+20), "255.255.255.0"))
-    
-    lan.addInterface(fpga_iface1)
-    lan.addInterface(fpga_iface2)
-    lan.addInterface(host_iface1)
+    fpga_iface2.addAddress(pg.IPv4Address("192.168.50." + str(i+20), "255.255.255.0"))
+    lan2.addInterface(fpga_iface1)
+    lan2.addInterface(fpga_iface2)
+        
+
+    lan1.link_multiplexing = True;
+    lan1.best_effort = True;
+
+    lan2.link_multiplexing = True;
+    lan2.best_effort = True;
   
     i+=1
 
