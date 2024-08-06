@@ -116,7 +116,7 @@ for nodeName in nodeList:
 
     # Secret sauce.
     fpga.SubNodeOf(host)
-    host2.SubNodeOf(host)
+  
 
     if i==0:
         host_iface1 = host.addInterface()
@@ -125,7 +125,7 @@ for nodeName in nodeList:
         lan1.addInterface(host_iface1)
     if i==1:
         host_iface1 = host.addInterface()
-        host_iface2 = host2.addInterface()
+        host_iface2 = host.SubNodeOf(host_iface1)
         host_iface1.component_id = "eth2"
         host_iface1.addAddress(pg.IPv4Address("192.168.50." + str(i+30), "255.255.255.0"))
         #lan1.addInterface(host_iface1)
