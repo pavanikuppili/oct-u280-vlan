@@ -136,8 +136,8 @@ for nodeName in nodeList:
     fpga_iface2 = fpga.addInterface()
     fpga_iface2.component_id = "eth1"
     fpga_iface2.addAddress(pg.IPv4Address("192.168.50." + str(i+20), "255.255.255.0"))
-    lan2.addInterface(fpga_iface1)
-    lan2.addInterface(fpga_iface2)
+    lan1.addInterface(fpga_iface1)
+    lan1.addInterface(fpga_iface2)
         
 
     lan1.link_multiplexing = True;
