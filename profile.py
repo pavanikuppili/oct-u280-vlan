@@ -130,14 +130,14 @@ for nodeName in nodeList:
         #lan1.addInterface(host_iface1)
         lan2.addInterface(host_iface1)
 
-    fpga_iface1 = fpga.addInterface("if0")
-    fpga_iface1.component_id = "eth0"
-    fpga_iface1.addAddress(pg.IPv4Address("192.168.50." + str(i+10), "255.255.255.0"))
-    # fpga_iface2 = fpga.addInterface("if1")
-    # fpga_iface2.component_id = "eth1"
-    # fpga_iface2.addAddress(pg.IPv4Address("192.168.50." + str(i+20), "255.255.255.0"))
-    lan2.addInterface(fpga_iface1)
-    #lan2.addInterface(fpga_iface2)
+    # fpga_iface1 = fpga.addInterface("if0")
+    # fpga_iface1.component_id = "eth0"
+    # fpga_iface1.addAddress(pg.IPv4Address("192.168.50." + str(i+10), "255.255.255.0"))
+    fpga_iface2 = fpga.addInterface("if1")
+    fpga_iface2.component_id = "eth1"
+    fpga_iface2.addAddress(pg.IPv4Address("192.168.50." + str(i+20), "255.255.255.0"))
+    #lan2.addInterface(fpga_iface1)
+    lan2.addInterface(fpga_iface2)
         
 
     lan1.link_multiplexing = True;
